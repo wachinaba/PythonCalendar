@@ -9,19 +9,33 @@ class Childs():
       self.data = data
       self.prev = None
       self.next = None
+      self._len = 0
 
   def __init__(self, *iterable):
-    new = Childs.Node()
-    self.head = new
-    self.head.prev = self.head.next = new
+    self.head = self.head.prev = self.head.next = Childs.Node()
+
+  def append(self, data=None):
+    prev_node = self.head
+    next_node = self.next
+    new_node = Childs.Node(data)
+
+    prev_node.next = next_node.prev = new_node
+    new_node.prev = prev_node
+    new_node.next = next_node
+
+    self._len += 1
+
+  def move_top(self, node):
+    
+      
 
   def __iter__(self):
     return ChildsIterator(self)
 
 class ChildsIterator():
-  def __init__(self, ll):
+  def __init__(self, childs):
     self.i = 0
-    self._ll = ll
+    self._childs = childs
 
   def __iter__(self):
     return self
