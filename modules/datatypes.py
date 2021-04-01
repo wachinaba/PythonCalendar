@@ -1,3 +1,5 @@
+import copy
+
 class Rect():
   def __init__(self, x=0, y=0, w=0, h=0):
     self.x, self.y, self.w, self.h = x, y, w, h
@@ -21,21 +23,31 @@ class Childs():
     new_node = Childs.Node(data)
     new_node.prev = self.head
     new_node.next = self.head.next
-    self.head.next = self.head.next.prev = new_node
+    self.head.next = new_node
+    self.head.next.prev = new_node
     self._len += 1
     return new_node
 
   def move_top(self, node):
-    node.next.prev = node.prev.next
+    print("node id:", id(node))
+    print("org node:", id(node.prev), " - ", node.data, " - ", id(node.next))
+    node.prev.next = copy.copy(node.next)
+    node.next.prev = copy.copy(node.prev)
+    print("n, p:", id(node.next.prev), id(node.prev.next))
     node.prev = self.head
     node.next = self.head.next
     self.head.next = self.head.next.prev = node
 
   def printall(self):
+    print("head:", id(self.head))
     n = self.head.next
+    i=0
     while not n == self.head:
-      print(n.data)
+      print(id(n.prev), " - ", n.data, "(", id(n), ")", " - ", id(n.next))
       n = n.next
+      i += 1
+      if i == self._len : break
+
       
 """
   def __iter__(self):
