@@ -9,11 +9,13 @@ class Childs():
   class Node():
     def __init__(self, data=None):
       self.data = data
-      self.prev = None
-      self.next = None
+      self._prev = None
+      self._next = None
 
   def __init__(self, *iterable):
-    self.head = self.head.prev = self.head.next = Childs.Node()
+    self.head = Childs.Node()
+    self.head._prev = self.head
+    self.head._next = self.head
     self._len = 0
 
   def __len__(self):
@@ -21,34 +23,30 @@ class Childs():
 
   def append(self, data=None):
     new_node = Childs.Node(data)
-    new_node.prev = self.head
-    new_node.next = self.head.next
-    self.head.next = new_node
-    self.head.next.prev = new_node
+    new_node._prev = self.head
+    new_node._next = self.head._next
+    self.head._next._prev = new_node
+    self.head._next = new_node
     self._len += 1
     return new_node
 
   def move_top(self, node):
-    print("node id:", id(node))
-    print("org node:", id(node.prev), " - ", node.data, " - ", id(node.next))
-    node.prev.next = copy.copy(node.next)
-    node.next.prev = copy.copy(node.prev)
-    print("n, p:", id(node.next.prev), id(node.prev.next))
-    node.prev = self.head
-    node.next = self.head.next
-    self.head.next = self.head.next.prev = node
-
+    node._prev._next = node._next
+    node._next._prev = node._prev
+    node._prev = self.head
+    node._next = self.head._next
+    self.head._next._prev = node
+    self.head._next = node
+    
   def printall(self):
-    print("head:", id(self.head))
-    n = self.head.next
+    n = self.head._next
     i=0
     while not n == self.head:
-      print(id(n.prev), " - ", n.data, "(", id(n), ")", " - ", id(n.next))
-      n = n.next
+      print(n.data)
+      n = n._next
       i += 1
       if i == self._len : break
 
-      
 """
   def __iter__(self):
     return ChildsIterator(self)

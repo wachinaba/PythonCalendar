@@ -1,11 +1,12 @@
-import types
+import datatypes as dt
 
 class BaseContainer():
-  def __init__(self, rect: Rect):
+  def __init__(self, rect: dt.Rect):
     self.rect = rect
-    self.childs = list()
+    self.childs = dt.Childs()
 
   def append(self, child):
     self.childs.append(child)
 
-  def delete(self, child):
+  
+
