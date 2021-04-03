@@ -50,22 +50,33 @@ class Childs():
   def __iter__(self):
     return Childs.Iterator(self)
 
+  def __reversed__(self):
+    return Childs.ReversedIterator(self)
+
   class Iterator():
     def __init__(self, childs):
       self._childs = childs
+      self._next_node = self._childs._head
 
     def __iter__(self):
       return self
 
     def __next__(self):
-      if not self._childs._head._next == self._childs._head:
-        return self._childs._head._next
+      self._next_node = self._next_node._next
+      if not self._next_node == self._childs._head:
+        return self._next_node
+      else:
+        raise StopIteration
+
+  class ReversedIterator(Iterator):
+    def __init__(self, childs):
+      super().__init__(childs)
+    
+    def __next__(self):
+      self._next_node = self._next_node._prev
+      if not self._next_node == self._childs._head:
+        return self._next_node
       else:
         raise StopIteration
     
-    def __reversed__(self):
-      if not self._childs._head._prev == self._childs._head:
-        return self._childs._head._prev
-      else:
-        raise StopIteration
       

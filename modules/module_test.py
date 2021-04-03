@@ -12,3 +12,6 @@ l.printall()
 
 l.move_top(x)
 l.printall()
+
+for n in reversed(l):
+  print("for:", n.data)
