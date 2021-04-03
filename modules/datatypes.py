@@ -13,9 +13,9 @@ class Childs():
       self._next = None
 
   def __init__(self, *iterable):
-    self.head = Childs.Node()
-    self.head._prev = self.head
-    self.head._next = self.head
+    self._head = Childs.Node()
+    self._head._prev = self._head
+    self._head._next = self._head
     self._len = 0
 
   def __len__(self):
@@ -23,42 +23,49 @@ class Childs():
 
   def append(self, data=None):
     new_node = Childs.Node(data)
-    new_node._prev = self.head
-    new_node._next = self.head._next
-    self.head._next._prev = new_node
-    self.head._next = new_node
+    new_node._prev = self._head
+    new_node._next = self._head._next
+    self._head._next._prev = new_node
+    self._head._next = new_node
     self._len += 1
     return new_node
 
   def move_top(self, node):
     node._prev._next = node._next
     node._next._prev = node._prev
-    node._prev = self.head
-    node._next = self.head._next
-    self.head._next._prev = node
-    self.head._next = node
+    node._prev = self._head
+    node._next = self._head._next
+    self._head._next._prev = node
+    self._head._next = node
     
   def printall(self):
-    n = self.head._next
+    n = self._head._next
     i=0
-    while not n == self.head:
+    while not n == self._head:
       print(n.data)
       n = n._next
       i += 1
       if i == self._len : break
 
-"""
   def __iter__(self):
-    return ChildsIterator(self)
+    return Childs.Iterator(self)
 
-class ChildsIterator():
-  def __init__(self, childs):
-    self.i = 0
-    self._childs = childs
+  class Iterator():
+    def __init__(self, childs):
+      self._childs = childs
 
-  def __iter__(self):
-    return self
+    def __iter__(self):
+      return self
 
-  def __next__(self):
-    pass
-"""
+    def __next__(self):
+      if not self._childs._head._next == self._childs._head:
+        return self._childs._head._next
+      else:
+        raise StopIteration
+    
+    def __reversed__(self):
+      if not self._childs._head._prev == self._childs._head:
+        return self._childs._head._prev
+      else:
+        raise StopIteration
+      
