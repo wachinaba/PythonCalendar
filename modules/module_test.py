@@ -1,17 +1,47 @@
-import datatypes
+import pprint
 
-l = datatypes.Childs()
-l.append(1)
-l.printall()
-l.append(2)
-l.printall()
-x = l.append(0)
-l.printall()
-l.append(3)
-l.printall()
+import gui
+import datatypes as dt
 
-l.move_top(x)
-l.printall()
+import pygame
+import pygame.rect as rect
 
-for n in reversed(l):
-  print("for:", n.data)
+from pygame.locals import (
+    K_UP,
+    K_DOWN,
+    K_LEFT,
+    K_RIGHT,
+    K_ESCAPE,
+    KEYDOWN,
+    QUIT,
+)
+
+o1 = gui.BaseContainer(rect.Rect(0,0,50,60))
+o2 = gui.BaseContainer(rect.Rect(40,40,30,60))
+
+# Initialize pygame
+pygame.init()
+
+# Define constants for the screen width and height
+SCREEN_WIDTH = 800
+SCREEN_HEIGHT = 600
+
+# Create the screen object
+# The size is determined by the constant SCREEN_WIDTH and SCREEN_HEIGHT
+screen = pygame.display.set_mode((SCREEN_WIDTH, SCREEN_HEIGHT))
+
+running = True
+
+# Main loop
+while running:
+    # Look at every event in the queue
+    for event in pygame.event.get():
+        # Did the user hit a key?
+        if event.type == KEYDOWN:
+            # Was it the Escape key? If so, stop the loop.
+            if event.key == K_ESCAPE:
+                running = False
+
+        # Did the user click the window close button? If so, stop the loop.
+        elif event.type == QUIT:
+            running = False

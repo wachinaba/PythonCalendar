@@ -1,10 +1,5 @@
 import copy
 
-class Rect():
-  def __init__(self, x=0, y=0, w=0, h=0):
-    self.x, self.y, self.w, self.h = x, y, w, h
-
-
 class Childs():
   class Node():
     def __init__(self, container=None):
