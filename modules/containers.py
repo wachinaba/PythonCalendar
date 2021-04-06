@@ -27,3 +27,21 @@ class BaseContainer():
     self.parent = None
     self.node = None
     return self.childs.delete(self.node)
+
+  def process_callback(self):
+    pass
+
+  def draw_callback(self):
+    pass
+
+  def process(self):
+    self.process_callback()
+    for n in self.childs:
+      n.container.process()
+
+  def draw(self):
+    self.draw_callback()
+    for n in reversed(self.childs):
+      if n.container.state and self.STATE_NEEDREDRAW:
+        n.container.draw()
+

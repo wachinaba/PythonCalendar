@@ -1,6 +1,6 @@
 import pprint
 
-import gui
+import containers
 import datatypes as dt
 
 import pygame
@@ -16,8 +16,8 @@ from pygame.locals import (
     QUIT,
 )
 
-o1 = gui.BaseContainer(rect.Rect(0,0,50,60))
-o2 = gui.BaseContainer(rect.Rect(40,40,30,60))
+o1 = containers.BaseContainer(rect.Rect(0,0,50,60))
+o2 = containers.BaseContainer(rect.Rect(40,40,30,60))
 
 # Initialize pygame
 pygame.init()
